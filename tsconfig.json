@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "target": "es6",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "outDir": "dist",
+    "module": "commonjs",
+    "jsx": "react"
+  },
+  "files": [
+    "./src/ts/InjectorClient.ts"
+  ]
+}
