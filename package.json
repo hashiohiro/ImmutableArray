@@ -2,7 +2,7 @@
   "name": "immutable-array",
   "version": "1.0.0",
   "description": "",
-  "main": "InjectorClient.ts",
+  "main": "test/",
   "dependencies": {},
   "devDependencies": {
     "@types/mocha": "^2.2.41",
