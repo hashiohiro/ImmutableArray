@@ -2,8 +2,7 @@ import { AbstractList } from './AbstractList';
 import { IndexOutOfRangeError, CollectionErrorMessage } from './Errors';
 import { List } from './Interfaces';
 import ArrayHelper from '../infra/helper/ArrayHelper';
-import ContractHelper from '../infra/helper/ContractHelper';
-import ComparisonHelper from '../infra/helper/ComparisonHelper';
+import CompareHelper from '../infra/helper/CompareHelper';
 
 /**
  * 順序を保証するリスト型のコレクションです。
@@ -49,22 +48,16 @@ export class ImmutableArray<T> extends AbstractList<T>
 
     public Add(element: T): ImmutableArray<T>
     {
-        ContractHelper.ShouldBeNotObjectEmpty<T>(element);
         return new ImmutableArray<T>(ArrayHelper.AddElement(this.list, element));
     }
 
     public Remove(element: T): ImmutableArray<T>
     {
-        ContractHelper.ShouldBeNotObjectEmpty<T>(element);
         return new ImmutableArray<T>(ArrayHelper.RemoveElement(this.list, element));
     }
 
     public RemoveByIndex(index: number): ImmutableArray<T>
     {
-        ContractHelper.ShouldBeNotObjectEmpty(index);
-        ContractHelper.ShouldBeValueEqualOrMore(index, 0)
-        ContractHelper.ShouldBeValueEqualOrLess(index, this.Length() - 1)
-
         return new ImmutableArray<T>(ArrayHelper.RemoveElementByIndex(this.list, index))
     }
 
@@ -75,7 +68,6 @@ export class ImmutableArray<T> extends AbstractList<T>
 
     public IndexOf(element: T): number
     {
-        ContractHelper.ShouldBeNotObjectEmpty<T>(element);
         return this.list.indexOf(element);
     }
 
@@ -86,21 +78,16 @@ export class ImmutableArray<T> extends AbstractList<T>
 
     public IsEqual(list: List<T>): boolean
     {
-        ContractHelper.ShouldBeNotObjectEmpty(list.ToArray());
         return ArrayHelper.IsEqualArray(this.list, list.ToArray());
     }
 
     private InitArrayList(array: T[] = null): void
     {
-        this.list = ComparisonHelper.IsObjectEmpty(array) ? [] : array;
+        this.list = CompareHelper.IsNullOrUndefined(array) ? [] : array;
     }
 
     private GetElementByIndex(index: number): T
     {
-        ContractHelper.ShouldBeNotObjectEmpty(index);
-        ContractHelper.ShouldBeValueEqualOrMore(index, 0);
-        ContractHelper.ShouldBeValueEqualOrLess(index, this.Length() - 1);
-
         return this.list[index];
     }
 }

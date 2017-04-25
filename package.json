@@ -2,7 +2,7 @@
   "name": "immutable-array",
   "version": "1.0.0",
   "description": "",
-  "main": "test/",
+  "main": "InjectorClient.ts",
   "dependencies": {},
   "devDependencies": {
     "@types/mocha": "^2.2.41",
@@ -17,14 +17,6 @@
   "scripts": {
     "test": "mocha"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hashiohiro/TSInjector.git"
-  },
   "author": "Hiroshi Hashimoto",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/hashiohiro/TSInjector/issues"
-  },
-  "homepage": "https://github.com/hashiohiro/TSInjector#readme"
+  "license": "MIT"
 }

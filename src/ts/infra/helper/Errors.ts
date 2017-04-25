@@ -1,19 +1,39 @@
-export class InvalidOperationError extends Error {}
-export class ArgumentException extends Error {}
-
-export class ArrayHelperError
+/**
+ * 事前条件の検証で発生する例外
+ */
+export class RequireError extends Error
 {
-    public static readonly SeqNoContainElements = "シーケンスに、一致する要素は含まれていません";
+    constructor(message: string)
+    {
+        super();
+        this.message = message;
+    }
 }
 
-export class ContractHelperError
+/**
+ * Nullが与えられることを認めない引数に、Nullが与えられた場合に発生する例外
+ */
+export class ArgumentNullError extends RequireError
 {
-    public static readonly ShouldBeEmpty = "契約違反: オブジェクトは空であるべきです";
-    public static readonly ShouldBeNotEmpty = "契約違反: オブジェクトは空ではいけません";
-    public static readonly ShouldBeArrayEmpty = "契約違反: 配列は空であるべきです";
-    public static readonly ShouldBeNotArrayEmpty = "契約違反: 配列は空ではいけません";
-    public static readonly ShouldBeValueMore = "契約違反: 規定の値を下回っています";
-    public static readonly ShouldBeValueEqualOrMore = "契約違反: 規定の値を下回っています";
-    public static readonly ShouldBeValueLess = "契約違反: 規定の値を上回っています";
-    public static readonly ShouldBeValueEqualOrLess = "契約違反: 規定の値を上回っています";
+    constructor()
+    {
+        super(RequireErrorMessage.ArgumentIsNull);
+    }
+}
+
+export class ArgumentRangeError extends RequireError
+{
+    constructor()
+    {
+        super(RequireErrorMessage.InvalidArrayLength);
+    }
+}
+
+/**
+ * エラーメッセージ定義
+ */
+export class RequireErrorMessage
+{
+    public static ArgumentIsNull = `引数がNullです`;
+    public static InvalidArrayLength = "配列の長さが事前条件を満たしていません。"
 }
