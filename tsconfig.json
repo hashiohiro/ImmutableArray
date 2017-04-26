@@ -7,10 +7,6 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "outDir": "dist",
-    "module": "commonjs",
-    "jsx": "react"
-  },
-  "files": [
-    "./src/ts/InjectorClient.ts"
-  ]
+    "module": "commonjs"
+  }
 }

@@ -1,7 +1,8 @@
 import Contract from '../../lib/contract/Contract';
-import { RequireError, RequireErrorMessage, ArgumentNullError, ArgumentRangeError } from './Errors';
 import CompareHelper from './CompareHelper';
-import HelperPreCondition from './HelperPreCondition';
+import { PreCondition } from './PreCondition';
+import { PostCondition } from './PostCondition';
+
 /**
  * 配列操作に関するメソッドを提供するヘルパクラスです。
  * MEMO: 当クラスの処理はすべて"""副作用がなく、スレッドセーフ"""です。
@@ -14,20 +15,20 @@ export default class ArrayHelper
      * @param array コピーする配列
      * @return コピー後の新しい配列
      */
-    public static DeepCopyArray(array: any[])
+    public static DeepCopyArray(array: any[]): any[]
     {
-        HelperPreCondition.DeepCopyArray(array);
-        return array.slice();
+        PreCondition.DeepCopyArray(array);
+        return PostCondition.DeepCopyArray(array.slice());
     }
 
     public static AddElement<T>(array: T[], element: T): T[]
     {
-        HelperPreCondition.AddElement(array, element);
+        PreCondition.AddElement(array, element);
 
         const copied = this.DeepCopyArray(array);
         copied.push(element);
 
-        return copied;
+        return PostCondition.AddElement(copied);
     }
 
     /**
@@ -39,7 +40,7 @@ export default class ArrayHelper
      */
     public static RemoveElement<T>(array: T[], element: T)
     {
-        HelperPreCondition.RemoveElement(array, element);
+        PreCondition.RemoveElement(array, element);
 
         for (let i = 0; i < array.length; i++)
         {
@@ -49,7 +50,7 @@ export default class ArrayHelper
             }
         }
         // 引数の参照を断ち切るためDeepCopyする。
-        return this.DeepCopyArray(array);
+        return PostCondition.RemoveElement(this.DeepCopyArray(array));
     }
 
     /**
@@ -61,12 +62,12 @@ export default class ArrayHelper
      */
     public static RemoveElementByIndex<T>(array: T[], index: number): T[]
     {
-        HelperPreCondition.RemoveElementByIndex(array, index);
+        PreCondition.RemoveElementByIndex(array, index);
 
         const copied = this.DeepCopyArray(array);
         copied.splice(index, 1)
 
-        return copied;
+        return PostCondition.RemoveElementByIndex(copied);
     }
 
     /**
@@ -76,8 +77,8 @@ export default class ArrayHelper
      */
     public static GetHead<T>(array: T[]): T
     {
-        HelperPreCondition.GetHead(array);
-        return this.DeepCopyArray(array)[0];
+        PreCondition.GetHead(array);
+        return PostCondition.GetHead(this.DeepCopyArray(array)[0]);
     }
 
     /**
@@ -87,8 +88,8 @@ export default class ArrayHelper
      */
     public static GetTail<T>(array: T[]): T[]
     {
-        HelperPreCondition.GetTail(array);
-        return this.DeepCopyArray(array).slice(0, 1);
+        PreCondition.GetTail(array);
+        return PostCondition.GetTail(this.DeepCopyArray(array).slice(0, 1));
     }
 
     /**
@@ -98,8 +99,8 @@ export default class ArrayHelper
      */
     public static GetLast<T>(array: T[]): T
     {
-        HelperPreCondition.GetLast(array);
-        return this.DeepCopyArray(array)[array.length - 1];
+        PreCondition.GetLast(array);
+        return PostCondition.GetLast(this.DeepCopyArray(array)[array.length - 1]);
     }
 
     /**
@@ -109,8 +110,8 @@ export default class ArrayHelper
      */
     public static IsEqualArray<T>(array1: T[], array2: T[]): boolean
     {
-        HelperPreCondition.IsEqualArray(array1, array2);
-        return this.ZipArray(array1, array2).filter(tuple => tuple[0] !== tuple[0]).length == 0;
+        PreCondition.IsEqualArray(array1, array2);
+        return PostCondition.IsEqualArray(this.ZipArray(array1, array2).filter(tuple => tuple[0] !== tuple[0]).length == 0);
     }
 
     /**
@@ -120,7 +121,7 @@ export default class ArrayHelper
      */
     public static ZipArray<T, U>(array1: T[], array2: U[]): [T, U][]
     {
-        HelperPreCondition.ZipArray(array1, array2);
-        return <[T, U][]>array1.map((element, index) => [element, array2[index]]);
+        PreCondition.ZipArray(array1, array2);
+        return PostCondition.ZipArray(<[T, U][]>array1.map((element, index) => [element, array2[index]]));
     }
 }

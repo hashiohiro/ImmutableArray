@@ -1,7 +1,8 @@
 import Contract from '../../lib/contract/Contract';
 import CompareHelper from './CompareHelper';
 import { ArgumentNullError, ArgumentRangeError } from './Errors';
-export default class HelperPreCondition
+
+export class PreCondition
 {
     public static DeepCopyArray(array: any[]): void
     {
